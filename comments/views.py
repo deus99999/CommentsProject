@@ -5,6 +5,7 @@ from rest_framework.filters import OrderingFilter
 
 
 class CommentViewSet(viewsets.ModelViewSet):
+    """Only main comments list """
     queryset = Comment.objects.filter(parent=None)
     serializer_class = CommentSerializer
 
