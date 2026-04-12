@@ -27,6 +27,17 @@ function App() {
     loadComments();
   }, [sortField, url]);
 
+  const toggleSort = (field) => {
+    if (sortField === field) {
+      // Если уже сортируем по этому полю, добавляем минус (обратный порядок)
+      setSortField(`-${field}`);
+    } else {
+      // Если кликнули на новое поле или на поле с минусом, ставим без минуса (прямой порядок)
+      setSortField(field);
+    }
+  };
+
+
   return (
     <div>
     
@@ -36,14 +47,14 @@ function App() {
       <table border="1" style={{ width: '100%', textAlign: 'left', marginBottom: '20px' }}>
         <thead>
           <tr>
-            <th onClick={() => setSortField('user_name')} style={{ cursor: 'pointer' }}>
-              Имя {sortField === 'user_name' ? '▲' : '▼'}
+            <th onClick={() => toggleSort('user_name')} style={{ cursor: 'pointer' }}>
+              Имя {sortField.includes('user_name') ? (sortField.startsWith('-') ? '▲' : '▼') : ''}
             </th>
-            <th onClick={() => setSortField('email')} style={{ cursor: 'pointer' }}>
-              E-mail {sortField === 'email' ? '▲' : '▼'}
+            <th onClick={() => toggleSort('email')} style={{ cursor: 'pointer' }}>
+              E-mail {sortField.includes('email') ? (sortField.startsWith('-') ? '▲' : '▼') : ''}
             </th>
-            <th onClick={() => setSortField('-created_at')} style={{ cursor: 'pointer' }}>
-              Дата {sortField === '-created_at' ? '▲' : '▼'}
+            <th onClick={() => toggleSort('created_at')} style={{ cursor: 'pointer' }}>
+              Дата {sortField.includes('created_at') ? (sortField.startsWith('-') ? '▼' : '▲'): ''}
             </th>
           </tr>
         </thead>

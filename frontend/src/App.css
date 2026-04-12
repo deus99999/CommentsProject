@@ -1,10 +1,11 @@
 .comment-container {
-  border: 1px solid #e0e0e0;
+  /* border: 1px solid #e0e0e0; */
   padding: 15px;
   margin-bottom: 15px;
   background-color: #fff;
   border-radius: 4px;
   font-family: sans-serif;
+  border: 1px solid #e0e0e0;
 
 }
 
@@ -15,7 +16,7 @@
   margin-bottom: 10px;
   font-size: 0.9rem;
   background:rgb(245, 247, 247);
-  padding: 5px
+  padding: 5px;
 }
 
 .username {
@@ -36,8 +37,10 @@
 
 
 .replies-container {
-  margin-left: 40px;
-  border-left: 2px solid #f0f0f0;
+  /* margin-left: 40px; */
+  /* border-left: 2px solid #f0f0f0; */
+  margin: 0px;
+  border: none;
   padding-left: 20px;
 }
 
