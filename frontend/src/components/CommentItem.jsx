@@ -11,7 +11,7 @@ const CommentItem = ({ comment }) => {
         <div className="comment-header">
           <div className="avatar">
           <img 
-              src={comment.file ? comment.file : defaultAvatar} 
+              src={defaultAvatar} 
               alt="avatar" 
               style={{
                 width: '100%',
@@ -22,7 +22,7 @@ const CommentItem = ({ comment }) => {
             />
           </div>
           <span className="username">
-                    {comment.user_name}
+            {comment.user_name}
           </span>
           <span className="date">{new Date(comment.created_at).toLocaleString()}</span>
         </div>
@@ -31,11 +31,15 @@ const CommentItem = ({ comment }) => {
           {comment.text}
         </div>
 
-        {/* {comment.file && (
+        {comment.file && (
           <div className="comment-file">
-            <a href={comment.file} target="_blank" rel="noreferrer">📎 Файл</a>
+            <a 
+             href={comment.file}
+             data-lightbox="image-1" 
+             data-title="My File"
+             target="_blank" rel="noreferrer">File</a>
           </div>
-        )} */}
+        )}
       </div>
 
       {comment.replies && comment.replies.length > 0 && (

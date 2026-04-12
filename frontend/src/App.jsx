@@ -4,6 +4,10 @@ import heroImg from './assets/hero.png'
 import './App.css'
 import CommentItem from './components/CommentItem'
 import { useEffect, useState } from 'react'
+import 'lightbox2/dist/css/lightbox.min.css';
+import 'lightbox2/dist/js/lightbox-plus-jquery.min.js';
+import lightbox from 'lightbox2';
+
 
 function App() {
   const [comments, setComments] = useState([])
@@ -26,6 +30,14 @@ function App() {
   useEffect(() => {
     loadComments();
   }, [sortField, url]);
+
+  useEffect(() => {
+    lightbox.option({
+      'resizeDuration': 1,
+      'wrapAround': true,
+      'albumLabel': "Изображение %1 из %2"
+    })
+  }, []);
 
   const toggleSort = (field) => {
     if (sortField === field) {
