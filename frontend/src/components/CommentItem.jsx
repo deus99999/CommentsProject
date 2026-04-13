@@ -26,10 +26,11 @@ const CommentItem = ({ comment }) => {
           </span>
           <span className="date">{new Date(comment.created_at).toLocaleString()}</span>
         </div>
-        
-        <div className="comment-text">
-          {comment.text}
-        </div>
+
+        <div 
+            className="comment-text" 
+            dangerouslySetInnerHTML={{ __html: comment.text }} 
+        />
 
         {comment.file && (
           <div className="comment-file">
