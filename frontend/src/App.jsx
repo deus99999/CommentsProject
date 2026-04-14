@@ -7,7 +7,8 @@ import { useEffect, useState } from 'react'
 import 'lightbox2/dist/css/lightbox.min.css';
 import 'lightbox2/dist/js/lightbox-plus-jquery.min.js';
 import lightbox from 'lightbox2';
-
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import CommentForm from './components/CommentForm'; // Вынеси форму в отдельный файл
 
 function App() {
   const [comments, setComments] = useState([])
@@ -51,50 +52,62 @@ function App() {
 
 
   return (
-    <div>
-    
-    <div>
-      {/* <h1>Комментарии</h1> */}
-      
-      <table border="1" style={{ width: '100%', textAlign: 'left', marginBottom: '20px' }}>
-        <thead>
-          <tr>
-            <th onClick={() => toggleSort('user_name')} style={{ cursor: 'pointer' }}>
-              Имя {sortField.includes('user_name') ? (sortField.startsWith('-') ? '▲' : '▼') : ''}
-            </th>
-            <th onClick={() => toggleSort('email')} style={{ cursor: 'pointer' }}>
-              E-mail {sortField.includes('email') ? (sortField.startsWith('-') ? '▲' : '▼') : ''}
-            </th>
-            <th onClick={() => toggleSort('created_at')} style={{ cursor: 'pointer' }}>
-              Дата {sortField.includes('created_at') ? (sortField.startsWith('-') ? '▼' : '▲'): ''}
-            </th>
-          </tr>
-        </thead>
-      </table>
-      
-      <div>
-        {comments.map(comment => 
-          <CommentItem key={comment.id} comment={comment} />
-        )}
-      </div>
-    </div>
+    <BrowserRouter>
+      <div className="container">
+        <nav style={{ marginBottom: '20px' }}>
+          <Link to="/" style={{ marginRight: '15px'}}>Комментарии</Link>
+          <Link to="/create" style={{ padding: '8px 16px', background: '#007bff', color: '#fff', borderRadius: '4px', textDecoration: 'none' }}>
+            + Добавить комментарий
+          </Link>
 
-      <div className="pagination">
-      <button 
-        onClick={() => setUrl(prevPage)} 
-        disabled={!prevPage}
-      >
-        Назад
-      </button>
+        
+        </nav> 
+        
+         <Routes>
+          <Route path="/" element={
+            <>
+             <table border="1" style={{ width: '100%', textAlign: 'left', marginBottom: '20px' }}>
+              <thead>
+                <tr>
+                  <th onClick={() => toggleSort('user_name')} style={{ cursor: 'pointer' }}>
+                    Имя {sortField.includes('user_name') ? (sortField.startsWith('-') ? '▲' : '▼') : ''}
+                  </th>
+                  <th onClick={() => toggleSort('email')} style={{ cursor: 'pointer' }}>
+                    E-mail {sortField.includes('email') ? (sortField.startsWith('-') ? '▲' : '▼') : ''}
+                  </th>
+                  <th onClick={() => toggleSort('created_at')} style={{ cursor: 'pointer' }}>
+                    Дата {sortField.includes('created_at') ? (sortField.startsWith('-') ? '▼' : '▲'): ''}
+                  </th>
+                </tr>
+              </thead>
+            </table>
+      
+            <div>
+              {comments.map(comment => 
+                <CommentItem key={comment.id} comment={comment} />
+              )}
+            </div>
 
-      <button 
-        onClick={() => setUrl(nextPage)} 
-        disabled={!nextPage}
-      >
-        Вперед
-      </button>
+            <div className="pagination">
+                <button 
+                  onClick={() => setUrl(prevPage)} 
+                  disabled={!prevPage}
+                >
+                  Назад
+                </button>
+
+                <button 
+                  onClick={() => setUrl(nextPage)} 
+                  disabled={!nextPage}
+                >
+                  Вперед
+                </button>
+            </div>
+            </> }/>
+          <Route path="/create" element={<CommentForm onSuccess={() => window.location.href = '/'} />} />
+        </Routes>  
       </div>
-      </div>
+    </BrowserRouter>
   )
 }
 

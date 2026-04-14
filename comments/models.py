@@ -1,11 +1,5 @@
-# comments/models.py
 from django.db import models
-from django.core.validators import RegexValidator
-
-username_validator = RegexValidator(
-    regex=r'^[a-zA-Z0-9]+$',
-    message="Только латиница и цифры"
-)
+from comments.validators import username_validator
 
 
 class Comment(models.Model):

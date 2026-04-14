@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from comments.views import CommentViewSet
+from comments.views import CommentViewSet, CaptchaView
 from django.conf.urls.static import static
 
 router = DefaultRouter()
@@ -11,6 +11,8 @@ router.register(r'comments', CommentViewSet)
 urlpatterns = [
     path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
+    path('api/get-captcha/', CaptchaView.as_view(), name='get_captcha'),
+    path('captcha/', include('captcha.urls')),
 ]
 
 
