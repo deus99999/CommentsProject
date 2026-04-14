@@ -46,8 +46,34 @@ const CommentForm = ({ parentId = null, onSuccess }) => {
   };
 
   const handleFileChange = (e) => {
-    setFormData({ ...formData, file: e.target.files[0] });
-  };
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'text/plain'];
+
+    if (!allowedTypes.includes(file.type)) {
+        alert("Ошибка: Допустимые форматы только JPG, PNG, GIF и TXT.");
+        e.target.value = ""; 
+        return;
+      }
+
+    if (file.type.startsWith('image/') && file.type !== 'image/gif') {
+        const options = {
+          maxWidthOrHeight: 320, 
+          useWebWorker: true,    
+        };
+    
+        try {
+          const compressedFile = imageCompression(file, options);
+          
+          setFormData({ ...formData, file: compressedFile });
+        } catch (error) {
+          console.error("Ошибка при сжатии:", error);
+        }
+      } else {
+        setFormData({ ...formData, file: file });
+      }
+    };
 
   const insertTag = (tag) => {
     const textarea = document.getElementById('comment-text');
