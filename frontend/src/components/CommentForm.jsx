@@ -45,35 +45,46 @@ const CommentForm = ({ parentId = null, onSuccess }) => {
     setFormData({ ...formData, captcha_input: e.target.value });
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
     const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'text/plain'];
 
     if (!allowedTypes.includes(file.type)) {
-        alert("Ошибка: Допустимые форматы только JPG, PNG, GIF и TXT.");
-        e.target.value = ""; 
+      alert("Ошибка: Допустимые форматы только JPG, PNG, GIF и TXT.");
+      e.target.value = ""; 
+      return;
+    }
+
+    if (file.type === 'text/plain') {
+      const maxSizeInBytes = 100 * 1024; 
+      if (file.size > maxSizeInBytes) {
+        alert("Ошибка: Текстовый файл не должен превышать 100 КБ.");
+        e.target.value = "";
         return;
       }
-
-    if (file.type.startsWith('image/') && file.type !== 'image/gif') {
-        const options = {
-          maxWidthOrHeight: 320, 
-          useWebWorker: true,    
-        };
-    
-        try {
-          const compressedFile = imageCompression(file, options);
-          
-          setFormData({ ...formData, file: compressedFile });
-        } catch (error) {
-          console.error("Ошибка при сжатии:", error);
-        }
-      } else {
+      setFormData({ ...formData, file: file });
+    } 
+    else if (file.type.startsWith('image/') && file.type !== 'image/gif') {
+      const options = {
+        maxWidthOrHeight: 320, 
+        useWebWorker: true,    
+      };
+  
+      try {
+        const compressedFileBlob = await imageCompression(file, options);
+        const finalFile = new File([compressedFileBlob], file.name, { type: file.type });
+        setFormData({ ...formData, file: finalFile });
+      } catch (error) {
+        console.error("Ошибка при сжатии:", error);
         setFormData({ ...formData, file: file });
       }
-    };
+    } 
+    else {
+      setFormData({ ...formData, file: file });
+    }
+  };
 
   const insertTag = (tag) => {
     const textarea = document.getElementById('comment-text');
