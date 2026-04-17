@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import '../Form.css'; 
+import imageCompression from 'browser-image-compression';
+
 
 const CommentForm = ({ parentId = null, onSuccess }) => {
   const [formData, setFormData] = useState({
