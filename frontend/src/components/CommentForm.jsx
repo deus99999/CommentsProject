@@ -5,7 +5,7 @@ const CommentForm = ({ parentId = null, onSuccess }) => {
   const [formData, setFormData] = useState({
     user_name: '',
     email: '',
-    homepage: '',
+    home_page: '',
     text: '',
     captcha_input: '',
     file: null
@@ -34,7 +34,7 @@ const CommentForm = ({ parentId = null, onSuccess }) => {
   };
   
   const handleHomepageChange = (e) => {
-    setFormData({ ...formData, homepage: e.target.value });
+    setFormData({ ...formData, home_page: e.target.value });
   };
   
   const handleTextChange = (e) => {
@@ -48,16 +48,18 @@ const CommentForm = ({ parentId = null, onSuccess }) => {
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
+    
+    const fileName = file.name.toLowerCase();
+    const isTxt = fileName.endsWith('.txt');
     const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'text/plain'];
-
-    if (!allowedTypes.includes(file.type)) {
+    
+    if (!isTxt && !allowedTypes.includes(file.type)) {
       alert("Ошибка: Допустимые форматы только JPG, PNG, GIF и TXT.");
       e.target.value = ""; 
       return;
     }
 
-    if (file.type === 'text/plain') {
+    if (file.type === 'text/plain' || isTxt) {
       const maxSizeInBytes = 100 * 1024; 
       if (file.size > maxSizeInBytes) {
         alert("Ошибка: Текстовый файл не должен превышать 100 КБ.");
@@ -102,29 +104,45 @@ const CommentForm = ({ parentId = null, onSuccess }) => {
     setFormData({ ...formData, text: newText });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+  
     const data = new FormData();
-
-    data.append('captcha_0', captchaData.key); 
+  
+    data.append('captcha_0', captchaData.key);
     data.append('captcha_1', formData.captcha_input);
-
+  
     Object.keys(formData).forEach(key => {
       if (formData[key]) data.append(key, formData[key]);
     });
+  
     if (parentId) data.append('parent', parentId);
-
-    fetch('http://127.0.0.1:8000/api/comments/', {
-      method: 'POST',
-      body: data,
-    }).then(res => {
+  
+    try {
+      const res = await fetch('http://127.0.0.1:8000/api/comments/', {
+        method: 'POST',
+        body: data,
+      });
+  
+      const responseData = await res.json();
+      console.log(responseData);
+  
       if (res.ok) {
-        alert("Опубликовано!");
+        alert("Опубликовано");
         onSuccess();
       } else {
-        alert("Ошибка валидации на сервере");
+        if (responseData.captcha) {
+          alert("Неправильная капча");
+          fetchCaptcha();
+        } else {
+          alert("Ошибка: " + JSON.stringify(responseData));
+        }
       }
-    });
+  
+    } catch (error) {
+      console.error(error);
+      alert("Ошибка соединения");
+    }
   };
 
   return (
@@ -160,7 +178,7 @@ const CommentForm = ({ parentId = null, onSuccess }) => {
             />
             <input 
               name="homepage" type="url" className="form-input" placeholder="Home Page (URL)" 
-              onChange={handleHomepageChange} value={formData.homepage} 
+              onChange={handleHomepageChange} value={formData.home_page} 
             />
 
             <div className="captcha-block" style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
