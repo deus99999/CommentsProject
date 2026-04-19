@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import '../App.css';
 import CommentForm from './CommentForm';
-
+const API_BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
 
 const CommentItem = ({ comment, onRefresh }) => {
   const defaultAvatar = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
@@ -10,7 +10,7 @@ const CommentItem = ({ comment, onRefresh }) => {
 
   const fileUrl = comment.file && (comment.file.startsWith('http') 
     ? comment.file 
-    : `http://127.0.0.1:8000${comment.file}`);
+    : `${API_BASE}${comment.file}`);
 
 
     const handleSuccess = () => {

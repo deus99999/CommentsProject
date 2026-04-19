@@ -8,13 +8,13 @@ services:
       dockerfile: Dockerfile
     container_name: django_backend
     ports:
-      - "8000:8000"
+      - "8004:8000"
     volumes:
       - .:/app
     command: >
       sh -c "python manage.py makemigrations &&
              python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:8000"
+             python manage.py runserver 0.0.0.0:8004"
 
   frontend:
     build:
@@ -23,9 +23,10 @@ services:
     command: npm run dev -- --host --port 3000
     container_name: react_frontend
     ports:
-      - "3000:3000"
+      - "3004:3000"
     volumes:
       - ./frontend:/app
       - /app/node_modules
+      - ./frontend/.env:/app/.env
     depends_on:
       - backend

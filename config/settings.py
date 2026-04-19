@@ -22,13 +22,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-k$#9nvn88n-p==md(v8&=4izxapkf6#q=gok#m@nb_koqr(oq4'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+SERVER_IP = os.getenv("SERVER_IP", "127.0.0.1")
+FRONTEND_PORT = os.getenv("FRONTEND_PORT", "3000")
+
 DEBUG = True
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
+# Динамически формируем списки
+ALLOWED_HOSTS = [SERVER_IP, "localhost", "127.0.0.1"]
 
 
-# Application definition
+FRONTEND_URL = f"http://{SERVER_IP}:{FRONTEND_PORT}"
+
+CORS_ALLOWED_ORIGINS = [
+    FRONTEND_URL,
+    "http://localhost:3000",
+    "http://localhost:5173",  # Стандартный порт Vite
+]
+
+CSRF_TRUSTED_ORIGINS = [FRONTEND_URL]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -55,12 +66,6 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
-
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:5173",
-#     "http://127.0.0.1:5173",
-# ]
-
 
 ROOT_URLCONF = 'config.urls'
 

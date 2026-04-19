@@ -14,10 +14,10 @@ const CommentForm = ({ parentId = null, onSuccess }) => {
   });
   const [preview, setPreview] = useState(false);
   const [captchaData, setCaptchaData] = useState({ key: '', url: '' });
-
+  const API_BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
 
   const fetchCaptcha = () => {
-    fetch('http://127.0.0.1:8000/api/get-captcha/')
+    fetch(`${API_BASE}/api/get-captcha/`)
       .then(res => res.json())
       .then(data => setCaptchaData({ key: data.hashkey, url: data.image_url }));
   };
@@ -121,7 +121,7 @@ const CommentForm = ({ parentId = null, onSuccess }) => {
     if (parentId) data.append('parent', parentId);
   
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/comments/', {
+      const res = await fetch(`${API_BASE}/api/comments/`, {
         method: 'POST',
         body: data,
       });
