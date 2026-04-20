@@ -13,7 +13,7 @@ function App() {
   const [comments, setComments] = useState([])
   const [nextPage, setNextPage] = useState(null); 
   const [prevPage, setPrevPage] = useState(null); 
-  const [url, setUrl] = useState('${API_BASE}/api/comments/');
+  const [url, setUrl] = useState(`${API_BASE}/api/comments/`);
   const [sortField, setSortField] = useState('-created_at'); 
   console.log(API_BASE)
 
