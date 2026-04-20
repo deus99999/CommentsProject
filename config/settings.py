@@ -28,8 +28,7 @@ FRONTEND_PORT = os.getenv("FRONTEND_PORT", "3000")
 DEBUG = True
 
 # Динамически формируем списки
-ALLOWED_HOSTS = [SERVER_IP, "localhost", "127.0.0.1"]
-
+ALLOWED_HOSTS = [SERVER_IP, "localhost", "127.0.0.1", "commentsproject.onrender.com"]
 
 FRONTEND_URL = f"http://{SERVER_IP}:{FRONTEND_PORT}"
 
