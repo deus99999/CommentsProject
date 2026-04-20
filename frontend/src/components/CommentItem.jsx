@@ -18,8 +18,7 @@ const CommentItem = ({ comment, onRefresh }) => {
       onRefresh(); 
     };
 
-  console.log(comment)
-  return (
+    return (
     <div className="comment-wrapper">
     <div className="comment-container">
 

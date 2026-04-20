@@ -7,7 +7,7 @@ import 'lightbox2/dist/js/lightbox-plus-jquery.min.js';
 import lightbox from 'lightbox2';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import CommentForm from './components/CommentForm'; 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8004';
 
 function App() {
   const [comments, setComments] = useState([])
@@ -16,6 +16,7 @@ function App() {
   const [url, setUrl] = useState('${API_BASE}/api/comments/');
   const [sortField, setSortField] = useState('-created_at'); 
   console.log(API_BASE)
+
   const loadComments = () => {
     fetch(`${API_BASE}/api/comments/?ordering=${sortField}`) 
       .then(response => response.json())
