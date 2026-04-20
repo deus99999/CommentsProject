@@ -24,12 +24,30 @@ git clone https://github.com/deus99999/CommentsProject.git
 cd CommentsProject
 ```
 
-### 2. Запуск проекта
+
+### 2.  Переменные окружения
+
+Перед запуском проекта локально необходимо создать файлы:
+
+ ```
+.env.development в папке frontend со следующим содержимым:
+
+VITE_API_URL=http://127.0.0.1:8004
+```
+
+```
+.env в папке CommentsProject
+
+# SERVER_IP=127.0.0.1
+# FRONTEND_PORT=3000
+```
+
+### 3. Запуск проекта
 
 Соберите и запустите контейнеры одной командой:
 
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 ### Ссылка на проект
