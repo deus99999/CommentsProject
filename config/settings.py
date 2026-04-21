@@ -22,8 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-k$#9nvn88n-p==md(v8&=4izxapkf6#q=gok#m@nb_koqr(oq4'
 
-SERVER_IP = os.getenv("SERVER_IP", "127.0.0.1")
-FRONTEND_PORT = os.getenv("FRONTEND_PORT", "3000")
+SERVER_IP = "127.0.0.1"
+FRONTEND_PORT = 3000
 
 DEBUG = True
 
