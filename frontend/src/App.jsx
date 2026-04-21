@@ -7,7 +7,7 @@ import 'lightbox2/dist/js/lightbox-plus-jquery.min.js';
 import lightbox from 'lightbox2';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import CommentForm from './components/CommentForm'; 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8004';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
 
 function App() {
   const [comments, setComments] = useState([])
