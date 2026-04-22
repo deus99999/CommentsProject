@@ -67,6 +67,12 @@ cd CommentsProject
 docker compose up --build
 ```
 
+### 4. Можно аполнить базу данных
+
+```
+docker compose exec backend python seed.py
+```
+
 ### Ссылка на проект
 
 Локально проект работает на [http://localhost:3000](http://localhost:3000)
