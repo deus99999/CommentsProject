@@ -67,7 +67,7 @@ cd CommentsProject
 docker compose up --build
 ```
 
-### 4. Можно аполнить базу данных
+### 4. Можно заполнить базу данных
 
 ```
 docker compose exec backend python seed.py
