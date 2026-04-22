@@ -28,14 +28,14 @@ FRONTEND_PORT = 3000
 DEBUG = True
 
 # Динамически формируем списки
-ALLOWED_HOSTS = [SERVER_IP, "localhost", "127.0.0.1", "commentsproject-1.onrender.com"]
+ALLOWED_HOSTS = [SERVER_IP, "localhost", "127.0.0.1", '0.0.0.0', "commentsproject-1.onrender.com"]
 
 FRONTEND_URL = f"http://{SERVER_IP}:{FRONTEND_PORT}"
 
 CORS_ALLOWED_ORIGINS = [
     FRONTEND_URL,
     "http://localhost:3000",
-    "http://localhost:5173",  # Стандартный порт Vite
+    "http://localhost:5173",
 ]
 
 CSRF_TRUSTED_ORIGINS = [FRONTEND_URL]
