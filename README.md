@@ -75,4 +75,4 @@ docker compose exec backend python seed.py
 
 ### Ссылка на проект
 
-Локально проект работает на [http://localhost:3000](http://localhost:3000)
+Локально проект работает на [http://localhost:5173/](http://localhost:5173/)
